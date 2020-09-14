@@ -20,23 +20,34 @@
 	  $partofday = "magamise aeg";
   }//pärast 22 ja enne 6
   
-  //vaatame semestri kulgemist
+ //jälgime semestri kulgu
   $semesterstart = new DateTime("2020-8-31");
   $semesterend = new DateTime("2020-12-13");
-  //selgitame välja nende vahe ehk erinevuse
   $semesterduration = $semesterstart->diff($semesterend);
-  //leiame selle päevade arvuna
   $semesterdurationdays = $semesterduration->format("%r%a");
+  $today = new DateTime("now");
+  $fromsemesterstart = $semesterstart->diff($today);
+  //saime aja erinevuse objektina, seda niisama näidata ei saa
+  $fromsemesterstartdays = $fromsemesterstart->format("%r%a");
+  $semesterpercentage = 0;
   
-  //tänane päev
-  $today = "2020-8-31";
-  $semesterdate = new DateTime($today);
   
-  $interval = $semesterdate->diff(date_create("now"));
-  //arvutamine päeva järgi
-  $days = $interval->d;
-  if($days <= 1){
-	  $semestriolek = "ei ole veel alanud";
+  $semesterinfo = "Semester kulgeb vastavalt akadeemilisele kalendrile.";
+  if($semesterstart > $today){
+	  $semesterinfo = "Semester pole veel peale hakanud!";
+  }
+  if($fromsemesterstartdays === 0){
+	  $semesterinfo = "Semester algab täna!";
+  }
+  if($fromsemesterstartdays > 0 and $fromsemesterstartdays < $semesterdurationdays){
+	  $semesterpercentage = ($fromsemesterstartdays / $semesterdurationdays) * 100;
+	  $semesterinfo = "Semester on täies hoos, kestab juba " .$fromsemesterstartdays ." päeva, läbitud on " .$semesterpercentage ."%.";
+  }
+  if($fromsemesterstartdays == $semesterdurationdays){
+	  $semesterinfo = "Semester lõppeb täna!";
+  }
+  if($fromsemesterstartdays > $semesterdurationdays){
+	  $semesterinfo = "Semester on läbi saanud!";
   }
   
 ?>
@@ -53,5 +64,6 @@
   <p>See konkreetne leht on loodud veebiprogrammeerimise kursusel aasta 2020 sügissemestril <a href="https://www.tlu.ee">Tallinna Ülikooli</a> Digitehnoloogiate instituudis.</p>
   <p>Lehe avamise hetk: <?php echo $fulltimenow; ?>.</p>
   <p><?php echo "Praegu on " .$partofday ."."; ?></p>
+  <p><?php echo $semesterinfo; ?></p>
 </body>
 </html>
