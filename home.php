@@ -1,18 +1,14 @@
 <?php
-  //loeme andmebaasi login ifo muutujad
   
   $username = "Elena Dunajeva";
   $fulltimenow = date("d.m.Y H:i:s");
   $hournow = date("H");
   $partofday = "lihtsalt aeg";
   
-  //vaatame, mda vormist serverile saadetakse
-  //var_dump($_POST);
   
   $weekdaynameset = ["esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev", "pühapäev"];
   $monthnameset = ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"];
   
-  //küsime nädalapäeva
   $weekdaynow = date("N");
   //echo $weekdaynow;
   
@@ -61,13 +57,7 @@
 	  $semesterinfo = "Semester on läbi saanud!";
   }
   
-  //loen kataloogist piltide nimekirja
-  //$allfiles = scandir("../vp_pics/");
   $allfiles = array_slice(scandir("../vp_pics/"), 2);
-  //echo $allfiles;  //massiivi nii näidata ei saa!!!
-  //var_dump($allfiles);
-  //$allpicfiles = array_slice($allfiles, 2);
-  //var_dump($allpicfiles);
   $allpicfiles = [];
   $picfiletypes = ["image/jpeg", "image/png"];
   //käin kogu massiivi läbi ja kontrollin iga üksikut elementi, kas on sobiv fail ehk pilt
@@ -78,8 +68,6 @@
 	  }
   }
   
-  //paneme kõik pildid järjest ekraanile
-  //uurime, mitu pilti on ehk mitu faili on nimekirjas - massiivis
   $piccount = count($allpicfiles);
   //echo $piccount;
   //$i = $i + 1;
